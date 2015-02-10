@@ -1,6 +1,7 @@
 var singleton = (function() {
   var _instance;
 
+  // there will only be one instance of "single"
   var single = function() {
     function internal() {
       console.log('I am a private method!');
@@ -9,6 +10,7 @@ var singleton = (function() {
     var _random = Math.random();
     var _internal = 'I am a private variable';
 
+    // public interface
     return {
       pubVar: 'I am a public variable',
 
@@ -22,7 +24,9 @@ var singleton = (function() {
     };
   };
 
+  // public interface
   return {
+    
     // returns an instance of single()
     get: function() {
       if (!_instance) {
