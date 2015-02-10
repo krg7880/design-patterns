@@ -2,8 +2,8 @@ var Parent = require('./parent');
 
 /**
 Singleton Factory for building flyweight parent
-objects.
-
+objects if one doesn't already exists with similar
+properties.
 */
 var ParentFactory = (function() {
   var parents = {};
