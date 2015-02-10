@@ -4,7 +4,7 @@ In computer programming, flyweight is a software design pattern. A flyweight is 
 
 A classic example usage of the flyweight pattern is the data structures for graphical representation of characters in a word processor. It might be desirable to have, for each character in a document, a glyph object containing its font outline, font metrics, and other formatting data, but this would amount to hundreds or thousands of bytes for each character. Instead, for every character there might be a reference to a flyweight glyph object shared by every instance of the same character in the document; only the position of each character (in the document and/or the page) would need to be stored internally.
 
-(Source)[http://en.wikipedia.org/wiki/Flyweight_pattern]
+[Source](http://en.wikipedia.org/wiki/Flyweight_pattern)
 
 
 ### Example
