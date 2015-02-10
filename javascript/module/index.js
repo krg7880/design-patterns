@@ -23,12 +23,12 @@ var scoped = (function() {
 
   return {
     // returns the name 
-    name: function() {
+    getName: function() {
       return name;
     },
 
     // returns the version
-    version: function() {
+    getVersion: function() {
       return version;
     },
 
@@ -43,8 +43,13 @@ var scoped = (function() {
   };
 })();
 
-console.log(scoped.name());
-console.log(scoped.version());
+
+console.log('Module name', scoped.getName());
+
+console.log('Module version', scoped.getVersion());
+
 scoped.setName('new name');
-console.log(scoped.name());
+
+console.log(scoped.getName());
+
 scoped.callInternal();
