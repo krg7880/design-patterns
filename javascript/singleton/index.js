@@ -3,6 +3,10 @@ var singleton = (function() {
 
   // there will only be one instance of "Single"
   var Single = function() {
+    if (!this instanceof Single) {
+      return new Single();
+    }
+    
     function internal() {
       console.log('I am a private method!');
     }
