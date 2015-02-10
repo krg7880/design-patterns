@@ -10,9 +10,12 @@ var Channel = function(channel) {
   var id = parseInt(channel.id, 10);
   var displayName = channel.name;
   var publishUrl = channel.publish_url;
+
+  // flyweight factories used for sponsor and parent data
+  // as these may be redundant per channel
   var sponsored = SponsoredFactory.get(channel.sponsored, channel.sponsoredBy);
   var parent = ParentFactory.get(channel.parent_id, channel.parent_url, channel.parent_name);
-  
+
   return {
     getId: function() {
       return id;
