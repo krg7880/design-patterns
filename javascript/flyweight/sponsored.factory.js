@@ -24,16 +24,6 @@ var SponsoredFactory = (function() {
 
       return sponsors[key];
     },
-    remove: function(sponsored, sponsoredBy) {
-      var item = null;
-      if (sponsors[key]) {
-        item = sponsors[key];
-        sponsors[key] = null;
-        count -= 1;
-      }
-
-      return item;
-    },
     count: function() {
       return count;
     }
