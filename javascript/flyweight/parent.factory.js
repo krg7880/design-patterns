@@ -1,8 +1,9 @@
 var Parent = require('./parent');
 
 /**
-Factory for building flyweight parent
+Singleton Factory for building flyweight parent
 objects.
+
 */
 var ParentFactory = (function() {
   var parents = {};

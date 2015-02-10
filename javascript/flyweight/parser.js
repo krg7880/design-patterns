@@ -20,6 +20,8 @@ var Parser = function() {};
 util.inherits(Parser, events.EventEmitter);
 
 var parse = function(data) {
+  console.log(data);
+  return;
   data = (typeof(data) === 'object') ? data : JSON.parse(data);
   var root = data.root;
   var item = null;
