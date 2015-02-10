@@ -7,7 +7,7 @@ of the flyweight objects to avoid data
 duplication and redundancy.
 */
 var Channel = function(channel) {
-  var id = parseInt(channel.id, 10);
+  var id = channel.id;
   var displayName = channel.name;
   var publishUrl = channel.publish_url;
 

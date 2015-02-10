@@ -20,8 +20,6 @@ var Parser = function() {};
 util.inherits(Parser, events.EventEmitter);
 
 var parse = function(data) {
-  console.log(data);
-  return;
   data = (typeof(data) === 'object') ? data : JSON.parse(data);
   var root = data.root;
   var item = null;
@@ -40,7 +38,13 @@ var parse = function(data) {
 Parser.prototype.load = function(filepath) {
   var data = '';
   var self = this;
-  var stream = fs.createReadStream(filepath);
+  var stream = fs.createReadStream(filepath, { 
+    flags: 'r',
+    encoding: 'utf8',
+    fd: null,
+    mode: 0666,
+    autoClose: true
+  });
   stream.on('data', function onData(chunk) {
     data += chunk;
   }).on('end', function onEnd() {

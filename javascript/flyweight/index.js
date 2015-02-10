@@ -20,7 +20,7 @@ parser.on('channel', function onChannel(channel){
   console.log('Collection count', Collection.count());
   console.log('Number of sponsored channels', SponsoredFactory.count());
   console.log('Number of parent channels', ParentFactory.count());
-  console.log('Number of children for 1194811622255', Collection.getChildrenIds(1194811622255).length);
+  console.log('Number of children for 0000000022255', Collection.getChildrenIds("0000000022255").length);
 })
 
 // initiate loading the JSON file
