@@ -1,12 +1,16 @@
 var Subject = require('./subject');
 var Observer = require('./observer');
-var observerOne = new Observer({name: 'one'});
-var observerTwo = new Observer({name: 'two'});
 var subject = new Subject();
 
-subject.register(observerOne)
-  .register(observerTwo)
-  .notify({name: 'hello!'})
-  .unregister(observerTwo);
+// add some observers
+var max = 1000;
+for (var i=0; i<max; i++) {
+  subject.register(new Observer({name: 'one_' + i}));
+}
 
-console.log(subject.get(0))
+// notify the observers
+subject.notify({name: 'hello!'})
+  .unregister(0);
+
+// observer_0 was removed...
+console.log(subject.get(0));

@@ -1,3 +1,4 @@
+
 var Observers = function() {
   this.collection = [];
   this._count = 0;
@@ -9,9 +10,23 @@ Observers.prototype = {
       throw new Error('Invalid type exception - Object expected');
     }
 
-    this.collection.push(obj);
-    this._count += 1;
+    if (!this.exists(obj)) {
+      this.collection.push(obj);
+      this._count += 1;
+    }
+    
     return this;
+  },
+
+  exists: function(obj) {
+    var idx = this.indexOf(obj);
+    if (idx > -1) {
+      if (this.get(idx)) {
+        return true;
+      }
+    }
+
+    return false;
   },
 
   get: function(idx) {

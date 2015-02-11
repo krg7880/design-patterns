@@ -10,8 +10,15 @@ Subject.prototype = {
     return this;
   },
 
-  unregister: function(obj) {
-    this.observers.unregister(this.observers.indexOf(obj));
+  unregister: function(arg) {
+    if (typeof(arg) === 'object') {
+      this.observers.unregister(this.observers.indexOf(arg));
+    } else if (typeof(arg) === 'number') {
+      this.observers.unregister(arg);
+    } else {
+      throw new Error('Invalid argument exception - Expected an object or number');
+    }
+
     return this;
   },
 
