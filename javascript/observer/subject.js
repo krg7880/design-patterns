@@ -5,12 +5,12 @@ var Subject = function() {
 };
 
 Subject.prototype = {
-  add: function(obj) {
-    this.observers.add(obj);
+  register: function(obj) {
+    this.observers.register(obj);
   },
 
-  remove: function(obj) {
-    this.observers.removeAt(this.observers.indexOf(obj));
+  unregister: function(obj) {
+    this.observers.unregister(this.observers.indexOf(obj));
   },
 
   get: function(idx) {

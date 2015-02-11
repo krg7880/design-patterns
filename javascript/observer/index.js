@@ -4,9 +4,13 @@ var Observer = require('./observer');
 var observerOne = new Observer({name: 'one'});
 var observerTwo = new Observer({name: 'two'});
 var subject = new Subject();
-subject.add(observerOne);
-subject.add(observerTwo);
+
+subject.register(observerOne);
+
+subject.register(observerTwo);
+
 subject.notify({name: 'hello!'});
-subject.remove(observerTwo);
+
+subject.unregister(observerTwo);
 
 console.log(subject.get(0));

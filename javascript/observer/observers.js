@@ -4,7 +4,7 @@ var Observers = function() {
 };
 
 Observers.prototype = {
-  add: function(obj) {
+  register: function(obj) {
     if (typeof(obj) !== 'object') {
       throw new Error('Invalid type exception - Object expected');
     }
@@ -20,7 +20,7 @@ Observers.prototype = {
     }
   },
 
-  removeAt: function(idx) {
+  unregister: function(idx) {
     if (idx > -1 && idx < this._count) {
       this.list.splice(idx, 1);
       this._count -= 1;
@@ -35,7 +35,7 @@ Observers.prototype = {
     if (typeof(obj) !== 'object') {
       throw new Error('Invalid type exception - Object expected');
     }
-    
+
     var pos = 0;
 
     while(pos++ < this._count) {
