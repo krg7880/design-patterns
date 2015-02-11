@@ -4,12 +4,9 @@ var observerOne = new Observer({name: 'one'});
 var observerTwo = new Observer({name: 'two'});
 var subject = new Subject();
 
-subject.register(observerOne);
+subject.register(observerOne)
+  .register(observerTwo)
+  .notify({name: 'hello!'})
+  .unregister(observerTwo);
 
-subject.register(observerTwo);
-
-subject.notify({name: 'hello!'});
-
-subject.unregister(observerTwo);
-
-console.log(subject.get(0));
+console.log(subject.get(0))

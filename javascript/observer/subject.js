@@ -7,10 +7,12 @@ var Subject = function() {
 Subject.prototype = {
   register: function(obj) {
     this.observers.register(obj);
+    return this;
   },
 
   unregister: function(obj) {
     this.observers.unregister(this.observers.indexOf(obj));
+    return this;
   },
 
   get: function(idx) {
@@ -22,6 +24,8 @@ Subject.prototype = {
     for (var i=0; i< count; i++) {
       this.observers.get(i).update(ctx);
     }
+
+    return this;
   }
 };
 

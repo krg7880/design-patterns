@@ -25,6 +25,8 @@ Observers.prototype = {
       this.collection.splice(idx, 1);
       this._count -= 1;
     }
+
+    return this;
   },
 
   count: function() {
@@ -40,7 +42,6 @@ Observers.prototype = {
 
     while(pos++ < this._count) {
       if (this.collection[pos] === obj) {
-        console.log(pos);
         return pos;
       }
     }
