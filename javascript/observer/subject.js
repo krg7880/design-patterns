@@ -29,14 +29,14 @@ Subject.prototype.getAt = function(idx) {
   if (typeof(idx) !== 'number') {
     throw new Error('Invalid argument exception - number expected!');
   }
-  
+
   return this.observers.getAt(idx);
 };
 
-Subject.prototype.notify = function(ctx, data) {
+Subject.prototype.notify = function(ctx) {
   var count = this.observers.count();
   for (var i=0; i< count; i++) {
-    this.observers.getAt(i).update(ctx, data);
+    this.observers.getAt(i).update(ctx);
   }
 
   return this;

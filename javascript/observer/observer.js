@@ -3,8 +3,8 @@ var Observer = function(data) {
 };
 
 Observer.prototype = {
-  update: function(data) {
-    console.log('Got an update');
+  update: function(ctx) {
+    console.log('Got an update', ctx);
   }
 };
 

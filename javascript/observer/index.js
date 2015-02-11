@@ -9,7 +9,7 @@ for (var i=0; i<max; i++) {
 }
 
 // notify the observers
-subject.notify({}, {name: 'hello!'})
+subject.notify({name: 'hello!'})
   .removeObserver(0);
 
 // observer_0 was removed...
