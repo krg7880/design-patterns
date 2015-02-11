@@ -33,7 +33,6 @@ List.prototype = {
 
     while(pos++ < this._count) {
       if (this.list[pos] === obj) {
-        console.log('removing', pos);
         return pos;
       }
     }
