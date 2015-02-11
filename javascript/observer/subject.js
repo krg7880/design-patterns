@@ -4,20 +4,20 @@ var Subject = function() {
   this.observers = new Observers();
 };
 
-Subject.prototype.register = function(obj) {
+Subject.prototype.addObserver = function(obj) {
   if (typeof(obj) !== 'object') {
     throw new Error('Illegal argument exception - Object expected!');
   }
 
-  this.observers.register(obj);
+  this.observers.addObserver(obj);
   return this;
 };
 
-Subject.prototype.unregister = function(arg) {
+Subject.prototype.removeObserver = function(arg) {
   if (typeof(arg) === 'object') {
-    this.observers.unregister(this.observers.indexOf(arg));
+    this.observers.removeObserver(this.observers.indexOf(arg));
   } else if (typeof(arg) === 'number') {
-    this.observers.unregister(arg);
+    this.observers.removeObserver(arg);
   } else {
     throw new Error('Invalid argument exception - Expected an object or number');
   }

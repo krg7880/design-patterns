@@ -10,17 +10,18 @@ The observer pattern can cause memory leaks, known as the lapsed listener proble
 ```javascript
 var Subject = require('./subject');
 var Observer = require('./observer');
-var observerOne = new Observer({name: 'one'});
-var observerTwo = new Observer({name: 'two'});
 var subject = new Subject();
 
-subject.register(observerOne);
+// add some observers
+var max = 1000;
+for (var i=0; i<max; i++) {
+  subject.addObserver(new Observer({name: 'one_' + i}));
+}
 
-subject.register(observerTwo);
+// notify the observers
+subject.notify({}, {name: 'hello!'})
+  .removeObserver(0);
 
-subject.notify({name: 'hello!'});
-
-subject.unregister(observerTwo);
-
-console.log(subject.get(0));
+// observer_0 was removed...
+console.log(subject.getAt(0));
 ```

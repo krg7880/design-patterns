@@ -4,7 +4,7 @@ var Observers = function() {
   this._count = 0;
 };
 
-Observers.prototype.register = function(obj) {
+Observers.prototype.addObserver = function(obj) {
   if (!this.exists(obj)) {
     this.collection.push(obj);
     this._count += 1;
@@ -28,7 +28,7 @@ Observers.prototype.getAt = function(idx) {
   }
 };
 
-Observers.prototype.unregister = function(idx) {
+Observers.prototype.removeObserver = function(idx) {
   if (idx > -1 && idx < this._count) {
     this.collection.splice(idx, 1);
     this._count -= 1;
