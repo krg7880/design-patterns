@@ -1,5 +1,5 @@
 var Observers = function() {
-  this.list = [];
+  this.collection = [];
   this._count = 0;
 };
 
@@ -9,20 +9,20 @@ Observers.prototype = {
       throw new Error('Invalid type exception - Object expected');
     }
 
-    this.list.push(obj);
+    this.collection.push(obj);
     this._count += 1;
     return this;
   },
 
   get: function(idx) {
     if (idx > -1 && idx < this._count) {
-      return this.list[idx];
+      return this.collection[idx];
     }
   },
 
   unregister: function(idx) {
     if (idx > -1 && idx < this._count) {
-      this.list.splice(idx, 1);
+      this.collection.splice(idx, 1);
       this._count -= 1;
     }
   },
@@ -39,8 +39,7 @@ Observers.prototype = {
     var pos = -1;
 
     while(pos++ < this._count) {
-      console.log('p', pos);
-      if (this.list[pos] === obj) {
+      if (this.collection[pos] === obj) {
         console.log(pos);
         return pos;
       }
