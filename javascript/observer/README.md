@@ -5,3 +5,22 @@ The observer pattern is a software design pattern in which an object, called the
 The observer pattern can cause memory leaks, known as the lapsed listener problem, because in basic implementation it requires both explicit registration and explicit deregistration, as in the dispose pattern, because the subject holds strong references to the observers, keeping them alive. This can be prevented by the subject holding weak references to the observers.
 
 [Source](http://en.wikipedia.org/wiki/Observer_pattern)
+
+## Example
+```javascript
+var Subject = require('./subject');
+var Observer = require('./observer');
+var observerOne = new Observer({name: 'one'});
+var observerTwo = new Observer({name: 'two'});
+var subject = new Subject();
+
+subject.register(observerOne);
+
+subject.register(observerTwo);
+
+subject.notify({name: 'hello!'});
+
+subject.unregister(observerTwo);
+
+console.log(subject.get(0));
+```
