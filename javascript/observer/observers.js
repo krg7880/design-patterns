@@ -36,10 +36,12 @@ Observers.prototype = {
       throw new Error('Invalid type exception - Object expected');
     }
 
-    var pos = 0;
+    var pos = -1;
 
     while(pos++ < this._count) {
+      console.log('p', pos);
       if (this.list[pos] === obj) {
+        console.log(pos);
         return pos;
       }
     }
