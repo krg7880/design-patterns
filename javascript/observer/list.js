@@ -18,6 +18,7 @@ List.prototype = {
 
   removeAt: function(idx) {
     if (idx > -1 && idx < this._count) {
+      console.log('Splicing...');
       this.list.splice(idx, 1);
       this._count -= 1;
     }
@@ -29,10 +30,10 @@ List.prototype = {
 
   indexOf: function(obj) {
     var pos = 0;
-    var c = 0;
-    while(pos < this._count) {
+
+    while(pos++ < this._count) {
       if (this.list[pos] === obj) {
-        console.log('pos', pos);
+        console.log('removing', pos);
         return pos;
       }
     }

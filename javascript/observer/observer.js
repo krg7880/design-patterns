@@ -1,4 +1,6 @@
-var Observer = function() {};
+var Observer = function(data) {
+  this.name = data.name;
+};
 
 Observer.prototype = {
   update: function(data) {

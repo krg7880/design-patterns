@@ -13,6 +13,10 @@ Subject.prototype = {
     this.observers.removeAt(this.observers.indexOf(obj));
   },
 
+  get: function(idx) {
+    return this.observers.get(idx);
+  },
+
   notify: function(ctx) {
     var count = this.observers.count();
     for (var i=0; i< count; i++) {
