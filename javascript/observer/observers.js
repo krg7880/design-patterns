@@ -5,6 +5,10 @@ var Observers = function() {
 
 Observers.prototype = {
   add: function(obj) {
+    if (typeof(obj) !== 'object') {
+      throw new Error('Invalid type exception - Object expected');
+    }
+
     this.list.push(obj);
     this._count += 1;
     return this;
@@ -28,6 +32,10 @@ Observers.prototype = {
   },
 
   indexOf: function(obj) {
+    if (typeof(obj) !== 'object') {
+      throw new Error('Invalid type exception - Object expected');
+    }
+    
     var pos = 0;
 
     while(pos++ < this._count) {
