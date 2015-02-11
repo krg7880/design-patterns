@@ -15,10 +15,8 @@ Observers.prototype.register = function(obj) {
 
 Observers.prototype.exists = function(obj) {
   var idx = this.indexOf(obj);
-  if (idx > -1) {
-    if (this.get(idx)) {
-      return true;
-    }
+  if (idx > -1 && this.get(idx)) {
+    return true;
   }
 
   return false;
