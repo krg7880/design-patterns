@@ -1,7 +1,7 @@
-var List = require('./list');
+var Observers = require('./observers');
 
 var Subject = function() {
-  this.observers = new List();
+  this.observers = new Observers();
 };
 
 Subject.prototype = {
