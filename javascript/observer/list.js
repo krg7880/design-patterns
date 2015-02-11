@@ -18,7 +18,6 @@ List.prototype = {
 
   removeAt: function(idx) {
     if (idx > -1 && idx < this._count) {
-      console.log('Splicing...');
       this.list.splice(idx, 1);
       this._count -= 1;
     }
