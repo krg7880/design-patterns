@@ -5,12 +5,13 @@ var subject = new Subject();
 // add some observers
 var max = 1000;
 for (var i=0; i<max; i++) {
-  subject.addObserver(new Observer({name: 'one_' + i}));
+  subject.addObserver(new Observer({id: i, name: 'one_' + i}));
 }
 
-// notify the observers
+//notify the observers
 subject.notify({name: 'hello!'})
   .removeObserver(0);
 
 // observer_0 was removed...
-console.log(subject.getAt(0));
+
+console.log(subject.observers.indexOf(subject.observers.getAt(3)));

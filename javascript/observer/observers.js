@@ -1,6 +1,6 @@
-
 var Observers = function() {
   this.collection = [];
+  this._index = 0
   this._count = 0;
 };
 
@@ -43,7 +43,6 @@ Observers.prototype.count = function() {
 
 Observers.prototype.indexOf = function(obj) {
   var pos = -1;
-
   while(pos++ < this._count) {
     if (this.collection[pos] === obj) {
       return pos;
