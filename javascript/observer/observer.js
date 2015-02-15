@@ -4,7 +4,7 @@ var Observer = function(data) {
 };
 
 Observer.prototype.update = function(ctx) {
-  console.log('Got an update', ctx, this.name, this.id);
+  //console.log('Got an update', ctx, this.name, this.id);
 };
 
 module.exports = Observer;

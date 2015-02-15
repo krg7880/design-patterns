@@ -1,32 +1,55 @@
-function permutations(perm, used, data) {
-  var len = data.length;
+var Permutation = function() {
+  this.used = [];
+  this.permutations = [];
+  this.data = null;
+};
 
-  // stores the current character 
-  // per iteration
+Permutation.prototype.run = function(data) {
+  var len = data.length;
   var current = null;
 
   for (var i=0; i<len; i++) {
-
     current = data.splice(i, 1)[0];
 
-    // add current to used stack
-    used.push(current);
+    this.used.push(current);
 
     if (data.length === 0) {
-      perm.push(used.slice());
+      this.permutations.push(this.used.slice());
     }
 
-    // recursively permutate the
-    // data...
-    permutations(perm, used, data);
+    this.run(data);
 
-    // replace char at i with "current"
     data.splice(i, 0, current);
 
-    used.pop();
+    this.used.pop();
   }
-
-  return perm;
 }
 
-console.log(p([], [], ["a", "b", "c", "d"]));
+Permutation.prototype.permutate = function(data) {
+  if (typeof data === 'string') {
+    data = data.split('');
+  } else if (!(data instanceof Array)) {
+    return  [];
+  }
+  
+  this.data = data;
+
+  this.run(data);
+
+  return this;
+};
+
+Permutation.prototype.results = function() {
+  return this.permutations;
+}
+
+Permutation.prototype.count = function() {
+  return this.permutations.length;
+};
+
+// Permutate an array of strings...
+var permutation = new Permutation();
+permutation.permutate(["a", "b", "c", "d"]);
+
+console.log('results', permutation.results());
+console.log('count',permutation.count())

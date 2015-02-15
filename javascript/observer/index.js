@@ -14,4 +14,5 @@ subject.notify({name: 'hello!'})
 
 // observer_0 was removed...
 
+//console.log(subject.observers.collection);
 console.log(subject.observers.indexOf(subject.observers.getAt(3)));

@@ -1,13 +1,12 @@
 var Observers = function() {
   this.collection = [];
-  this._index = 0
+  this._indexes = [];
   this._count = 0;
 };
 
 Observers.prototype.addObserver = function(obj) {
   if (!this.exists(obj)) {
-    this.collection.push(obj);
-    this._count += 1;
+    this.collection[this._count++] = obj;
   }
 
   return this;
