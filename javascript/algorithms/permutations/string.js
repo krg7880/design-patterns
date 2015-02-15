@@ -2,6 +2,7 @@ var Permutation = function() {
   this.used = [];
   this.permutations = [];
   this.data = null;
+  this.length = 0;
 };
 
 Permutation.prototype.run = function(data) {
@@ -14,6 +15,7 @@ Permutation.prototype.run = function(data) {
     this.used.push(current);
 
     if (data.length === 0) {
+      this.length++;
       this.permutations.push(this.used.slice());
     }
 
@@ -44,7 +46,7 @@ Permutation.prototype.results = function() {
 }
 
 Permutation.prototype.count = function() {
-  return this.permutations.length;
+  return this.length;
 };
 
 // Permutate an array of strings...
