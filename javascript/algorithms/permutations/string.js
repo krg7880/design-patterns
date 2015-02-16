@@ -51,7 +51,7 @@ Permutation.prototype.count = function() {
 
 // Permutate an array of strings...
 var permutation = new Permutation();
-permutation.permutate(["a", "b", "c", "d"]);
+permutation.permutate("abcd");
 
 console.log('results', permutation.results());
 console.log('count',permutation.count())

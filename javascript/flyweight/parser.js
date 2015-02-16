@@ -1,6 +1,10 @@
+'use strict';
+
 var fs = require('fs');
 var util = require('util');
-var events = require('events')
+var events = require('events');
+var path = require('path');
+var FileLoader = require( path.normalize(path.dirname('.') + '/../util/file.loader.js'));
 
 /** 
 Parser object responsible for
@@ -36,20 +40,14 @@ var parse = function(data) {
 };
 
 Parser.prototype.load = function(filepath) {
-  var data = '';
-  var self = this;
-  var stream = fs.createReadStream(filepath, { 
-    flags: 'r',
-    encoding: 'utf8',
-    fd: null,
-    mode: 0666,
-    autoClose: true
-  });
-  stream.on('data', function onData(chunk) {
-    data += chunk;
-  }).on('end', function onEnd() {
-    parse.call(self, data);
-  });
+  var loader = new FileLoader();
+  loader.load(filepath, function onFileLoad(e, data) {
+    if (e) {
+      throw e;
+    }
+
+    parse.call(this, data);
+  }.bind(this));
 };
 
 module.exports = Parser;
