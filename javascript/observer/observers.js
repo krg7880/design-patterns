@@ -1,54 +1,37 @@
+var path = require('path');
+var Iterator = require( path.normalize(path.dirname('.') + '/../util/iterator.js'));
+
 var Observers = function() {
-  this.collection = [];
-  this._indexes = [];
-  this._count = 0;
+  this.collection = new Iterator();
 };
 
 Observers.prototype.addObserver = function(obj) {
   if (!this.exists(obj)) {
-    this.collection[this._count++] = obj;
+    this.collection.add(obj);
   }
 
   return this;
 };
 
 Observers.prototype.exists = function(obj) {
-  var idx = this.indexOf(obj);
-  if (idx > -1 && this.get(idx)) {
-    return true;
-  }
-
-  return false;
+  return this.collection.contains(obj);
 };
 
 Observers.prototype.getAt = function(idx) {
-  if (idx > -1 && idx < this._count) {
-    return this.collection[idx];
-  }
+  return this.collection.getAt(idx);
 };
 
 Observers.prototype.removeObserver = function(idx) {
-  if (idx > -1 && idx < this._count) {
-    this.collection.splice(idx, 1);
-    this._count -= 1;
-  }
-
+  this.collection.remove(idx);
   return this;
 };
 
 Observers.prototype.count = function() {
-  return this._count;
+  return this.collection.size();
 };
 
 Observers.prototype.indexOf = function(obj) {
-  var pos = -1;
-  while(pos++ < this._count) {
-    if (this.collection[pos] === obj) {
-      return pos;
-    }
-  }
-
-  return -1;
+  return this.collection.indexOf(obj);
 };
 
 module.exports = Observers;

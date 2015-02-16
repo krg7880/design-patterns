@@ -3,16 +3,25 @@ var Iterator = function(collection) {
     return new Iterator(collection);
   }
 
+  this.collection = collection || [];
+  this.initialize();
+};
+
+Iterator.prototype.initialize = function() {
   this.index = 0;
   this.keys = {};
-  this.collection = collection || [];
   this.length = 0;
 
-  if ((collection instanceof Array)) {
+  if ((this.collection instanceof Array)) {
     this.defaultIterator();
-  } else if (typeof(collection) === 'object') {
+  } else if (typeof(this.collection) === 'object') {
     this.objIterator();
   }
+};
+
+Iterator.prototype.setCollection = function(collection) {
+  this.collection = new Iterator(collection);
+  this.initialize();
 };
 
 Iterator.prototype.hasNext = function() {
@@ -59,6 +68,23 @@ Iterator.prototype.defaultIterator = function() {
     this.length++;
     return this;
   };
+
+  this.indexOf = function(item) {
+    return this.collection.indexOf(item);
+  };
+
+  this.getAt = function(idx) {
+    if (idx > -1 && idx < this.length) {
+      this.index = idx;
+      return this.collection[idx];
+    }
+  };
+
+  this.remove = function(idx) {
+    this.collection.splice(idx, 1);
+    this.length--;
+    return this;
+  }
 };
 
 Iterator.prototype.objIterator = function() {
