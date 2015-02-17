@@ -36,6 +36,10 @@ Iterator.prototype.size = function() {
   return this.length;
 };
 
+Iterator.prototype.reset = function() {
+  this.index = 0;
+}
+
 Iterator.prototype.defaultIterator = function() {
   this.length = this.collection.length;
 
@@ -62,6 +66,10 @@ Iterator.prototype.defaultIterator = function() {
   this.contains = function(item) {
     return (this.collection.indexOf(item) > -1);
   };
+
+  this.clone = function() {
+    return new Iterator(this.collection.slice());
+  }
 
   this.add = function(item) {
     this.collection[this.length] = item;

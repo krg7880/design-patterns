@@ -10,10 +10,18 @@ var Set = function(set) {
 
   this.collection = new Iterator(this.filter(set)) || new Iterator();
 
-  // returns the size of the collection
   this.size = (function() {
     return this.collection.size();
   }.bind(this))();
+
+  return {
+    collection: this.collection
+    ,add: this.add
+    ,has: this.has
+    ,clear: this.clear
+    ,diff: this.diff
+    ,union: this.union
+  }
 };
 
 
@@ -75,12 +83,46 @@ Set.prototype.clear = function() {
   this.collection = new Iterator();
 };
 
-var s = new Set([1, 3, 4, 5, {}]);
+/**
+Returns the difference from comparing
+two Set collections.
 
-console.log('has 1', s.has(1));
-console.log('add 1',s.add(1));
-console.log('add 1',s.add(1));
-console.log('add object', s.add({}))
-console.log('add kirk', s.add('kirk'));
-console.log('add kirk again', s.add('kirk'));
-console.log('get size', s.size);
+@returns {Array} Array of difference.
+*/
+Set.prototype.diff = function(set) {
+  var len = 0;
+  var diff = [];
+  var tmp = this.collection.clone()
+  while(tmp.hasNext()) {
+    var item = tmp.next();
+    if (!set.has(item)) {
+      diff[len++] = item;
+    }
+  }
+
+  return diff;
+};
+
+Set.prototype.union = function(set) {
+  var tmp = [];
+  var index = 0;
+  var tmp = set.collection;
+
+  while(tmp.hasNext()) {
+    var item = tmp.next();
+    if (!this.has(item)) {
+      tmp[index++] = item;
+    } 
+  }
+
+  return tmp.collection;
+};
+
+var s = new Set([1, 3, 4, 5, {}]);
+var b = new Set([2, 3, 6, 5, {name: 'food'}]);
+
+var union = s.union(b);
+var diff = s.diff(b);
+
+console.log('diff', diff);
+console.log('union', union);
