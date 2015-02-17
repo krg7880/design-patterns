@@ -8,14 +8,14 @@ var Set = function(set) {
     throw new TypeError('The provided set should be an array!');
   }
 
-  this.collection = new Iterator(this.filter(set)) || new Iterator();
+  this.data = new Iterator(this.filter(set)) || new Iterator();
 
   this.size = (function() {
-    return this.collection.size();
+    return this.data.size();
   }.bind(this))();
 
   return {
-    collection: this.collection
+    data: this.data
     ,add: this.add
     ,has: this.has
     ,clear: this.clear
@@ -32,14 +32,14 @@ Filter the initial collection for duplicate items
 for duplicate elements.
 @return {Array}
 */
-Set.prototype.filter = function(collection) {
+Set.prototype.filter = function(data) {
   var tmp = [];
-  var len = collection.length;
+  var len = data.length;
   var index = 0;
 
   for (var i=0; i<len; i++) {
-    if (tmp.indexOf(collection[i]) < 0) {
-      tmp[index++] = collection[i];
+    if (tmp.indexOf(data[i]) < 0) {
+      tmp[index++] = data[i];
     }
   }
 
@@ -63,7 +63,7 @@ Set.prototype.add = function(data) {
     return false;
   }
 
-  this.collection.add(data);
+  this.data.add(data);
   return true;
 };
 
@@ -76,11 +76,11 @@ exists in the collection.
   in the collection or false otherwise.
 */
 Set.prototype.has = function(data) {
-  return this.collection.contains(data);
+  return this.data.contains(data);
 };
 
 Set.prototype.clear = function() {
-  this.collection = new Iterator();
+  this.data = new Iterator();
 };
 
 /**
@@ -92,7 +92,8 @@ two Set collections.
 Set.prototype.diff = function(set) {
   var len = 0;
   var diff = [];
-  var tmp = this.collection.clone()
+  var tmp = this.data.clone();
+
   while(tmp.hasNext()) {
     var item = tmp.next();
     if (!set.has(item)) {
@@ -104,25 +105,24 @@ Set.prototype.diff = function(set) {
 };
 
 Set.prototype.union = function(set) {
-  var tmp = [];
   var index = 0;
-  var tmp = set.collection;
+  var tmp = set.data.clone();
 
-  while(tmp.hasNext()) {
-    var item = tmp.next();
-    if (!this.has(item)) {
-      tmp[index++] = item;
+  while(this.data.hasNext()) {
+    var item = this.data.next();
+    if (!tmp.contains(item)) {
+      tmp.add(item);
     } 
   }
 
   return tmp.collection;
 };
 
-var s = new Set([1, 3, 4, 5, {}]);
-var b = new Set([2, 3, 6, 5, {name: 'food'}]);
+var s = new Set([1, 3, 4, 5]);
+var b = new Set([2, 3, 4, 5]);
 
 var union = s.union(b);
 var diff = s.diff(b);
 
 console.log('diff', diff);
-console.log('union', union);
+console.log('union', union.sort());

@@ -68,7 +68,8 @@ Iterator.prototype.defaultIterator = function() {
   };
 
   this.clone = function() {
-    return new Iterator(this.collection.slice());
+    var copy = this.collection.slice();
+    return new Iterator(copy);
   }
 
   this.add = function(item) {
@@ -123,5 +124,6 @@ Iterator.prototype.objIterator = function() {
     this.length = this.keys.length;
   };
 };
+
 
 module.exports = Iterator;
