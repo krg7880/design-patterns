@@ -10,10 +10,6 @@ var Set = function(set) {
 
   this.data = new Iterator(this.filter(set)) || new Iterator();
 
-  this.size = (function() {
-    return this.data.size();
-  }.bind(this))();
-
   return {
     data: this.data
     ,add: this.add
@@ -21,6 +17,10 @@ var Set = function(set) {
     ,clear: this.clear
     ,diff: this.diff
     ,union: this.union
+    ,clone: this.clone
+    ,hasNext: this.data.hasNext
+    ,next: this.data.next
+    ,size: this.data.size
   }
 };
 
@@ -83,6 +83,18 @@ Set.prototype.clear = function() {
   this.data = new Iterator();
 };
 
+Set.prototype.hasNext = function() {
+  return this.data.hasNext()
+};
+
+Set.prototype.next = function() {
+  return this.data.next();
+};
+
+Set.prototype.clone = function() {
+  return new Set(this.data.collection.slice());
+};
+
 /**
 Returns the difference from comparing
 two Set collections.
@@ -92,10 +104,10 @@ two Set collections.
 Set.prototype.diff = function(set) {
   var len = 0;
   var diff = [];
-  var tmp = this.data.clone();
+  var tmp = this.clone();
 
-  while(tmp.hasNext()) {
-    var item = tmp.next();
+  while(tmp.data.hasNext()) {
+    var item = tmp.data.next();
     if (!set.has(item)) {
       diff[len++] = item;
     }
@@ -104,25 +116,30 @@ Set.prototype.diff = function(set) {
   return diff;
 };
 
+
+/**
+Returns a new Set with distint elements
+from both collections
+*/
 Set.prototype.union = function(set) {
   var index = 0;
-  var tmp = set.data.clone();
+  var tmp = this.clone();
 
-  while(this.data.hasNext()) {
-    var item = this.data.next();
-    if (!tmp.contains(item)) {
+  while(set.data.hasNext()) {
+    var item = set.data.next();
+    if (!tmp.has(item)) {
       tmp.add(item);
     } 
   }
 
-  return tmp.collection;
+  return tmp;
 };
 
 var s = new Set([1, 3, 4, 5]);
-var b = new Set([2, 3, 4, 5]);
+var b = new Set([2, 5, 10]);
 
-var union = s.union(b);
+var union = b.union(s);
 var diff = s.diff(b);
 
 console.log('diff', diff);
-console.log('union', union.sort());
+console.log('union', union.data.collection.sort());
