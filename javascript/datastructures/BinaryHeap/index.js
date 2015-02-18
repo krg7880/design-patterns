@@ -13,6 +13,14 @@ BinaryHeap.prototype.size = function() {
   return this.length;
 };
 
+BinaryHeap.prototype.isEmpty = function() {
+  return this.length < 1;
+};
+
+BinaryHeap.prototype.peek = function() {
+  return this.heap;
+};
+
 /**
 Returns the left child index of parent n
 
@@ -85,8 +93,7 @@ BinaryHeap.prototype.remove = function(item) {
     return null;
   }
 
-  var len = this.length;
-  for (var i=0; i<len; i++) {
+  for (var i=0; i<this.length; i++) {
     if (this.heap[i] === node) {
       var end = this.heap.pop();
       this.heap.slice(i, 1);
