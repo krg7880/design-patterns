@@ -3,7 +3,22 @@ Implementation of a binary heap
 -- Binary Tree (Structure)
 -- Heap property (Parent priority <= to child nodes)
 */
-var BinaryHeap = function(comparator) {
+
+var splice = function(arr, idx) {
+  var len = array.length;
+  var count = 0;
+  var tmp = [];
+
+  for (var i=0; i<len; i++) {
+    if (i !== idx) {
+      tmp[count++] = arr[i];
+    }
+  }
+
+  return tmp;
+};
+
+var BinaryHeap = function(comparator, max) {
   this.heap = [];
   this.comparator = comparator;
   this.length = 0;
@@ -18,7 +33,7 @@ BinaryHeap.prototype.isEmpty = function() {
 };
 
 BinaryHeap.prototype.peek = function() {
-  return this.heap;
+  return (this.length > 0) ? this.heap[0] : null;
 };
 
 /**
@@ -28,7 +43,7 @@ Returns the left child index of parent n
 @return {Number} index of the child
 */
 BinaryHeap.prototype.getLeftChildIndex = function(idx) {
-  return Math.floor((idx << 1));
+  return (((idx << 1)) | 0);
 };
 
 /**
@@ -48,7 +63,7 @@ Returns the right child index of parent n
 @return {Number} The index of the child element
 */
 BinaryHeap.prototype.getRightChildIndex = function(idx) {
-  return Math.floor((idx << 1) + 1);
+  return (((idx << 1) + 1) | 0);
 }
 
 /**
@@ -68,7 +83,7 @@ Returns the parent index for element at position n
 @return {Number} Index of parent element
 */
 BinaryHeap.prototype.getParentIndex = function(idx) {
-  return Math.floor((idx >> 1));
+  return ((idx >> 1) | 0);
 };
 
 BinaryHeap.prototype.getParent = function(idx) {
@@ -76,10 +91,18 @@ BinaryHeap.prototype.getParent = function(idx) {
 };
 
 BinaryHeap.prototype.enqueue = function(item) {
-  this.heap[(this.length++)] = item;
+  this.heap[this.length++] = item;
   this.bubbleUp(this.length - 1);
 
   return this;
+};
+
+BinaryHeap.prototype.inRange = function(idx) {
+  return (idx >= 0 && idx < this.size());
+};
+
+BinaryHeap.prototype.getAt = function(idx) {
+  return (this.size() > 0 && this.inRange(idx)) ? this.heap[idx] : null;
 };
 
 /**
@@ -94,7 +117,7 @@ BinaryHeap.prototype.remove = function(item) {
   }
 
   for (var i=0; i<this.length; i++) {
-    if (this.heap[i] === node) {
+    if (this.heap[i] === item) {
       var end = this.heap.pop();
       this.heap.slice(i, 1);
       this.length--;
@@ -116,12 +139,17 @@ BinaryHeap.prototype.bubbleUp = function(idx) {
     var parent = this.getParent(idx);
     var parentIdx = this.getParentIndex(idx);
 
+    // if the item score is greater than
+    // it's parent, break out!
     if (score >= this.comparator(parent)) {
       break;
     }
 
+    // swap parent with child element
     this.heap[parentIdx] = item;
     this.heap[idx] = parent;
+
+    // keep it moving
     idx = parentIdx;
   }
 
@@ -129,16 +157,24 @@ BinaryHeap.prototype.bubbleUp = function(idx) {
 };
 
 BinaryHeap.prototype.dequeue = function() {
-  var item = this.heap[0];
-  var end = this.heap.pop();
-  this.length -= 1;
+  var item = this.peek();
 
-  if (this.length > 0) {
-    this.heap[0] = end;
+  if (this.size() > 0) { 
+    this.heap[0] = this.heap.pop();
+    this.length -= 1;
     this.sink(0);
   }
 
   return item;
+};
+
+BinaryHeap.prototype.swap = function(a, b) {
+  var tmp = this.heap[b];
+  this.heap[b] = this.heap[a];
+  this.heap[a] = tmp;
+
+  //.log('swapping...')
+  return this;
 };
 
 BinaryHeap.prototype.sink = function(idx) {
@@ -150,40 +186,41 @@ BinaryHeap.prototype.sink = function(idx) {
   var leftChildScore = NaN;
   var rightChildScore = NaN;
   var swap = null;
-  var left = 0;
-  var rigth = 0;
+  var leftIndex= 0;
+  var rigthIndex = 0;
 
   while(true) {
     // reinitialize to null
     swap = null;
 
     // get child indexes
-    right = this.getRightChildIndex(idx); 
-    left = this.getLeftChildIndex(idx);
+    rightIndex = this.getRightChildIndex(idx); 
+    leftIndex = this.getLeftChildIndex(idx);
 
     // reinitialize scores to NaN
     rightChildScore = NaN;
     leftChildScore = NaN;
 
-    if (left < len) {
-      leftChild = this.heap[left];
+    if (leftIndex < len) {
+      leftChild = this.getAt(leftIndex);
       leftChildScore = this.comparator(leftChild);
 
       // swap the item with the left child
       if (leftChildScore < score) {
-        swap = left;
+        swap = leftIndex;
       }
     }
 
-    if (right < len) {
-      rightChild = this.heap[right];
+    if (rightIndex < len) {
+      rightChild = this.getAt(rightIndex)
       rightChildScore = this.comparator(rightChild);
 
       if (rightChildScore < (isNaN(leftChildScore) ? score : leftChildScore)) {
-        swap = right;
+        swap = rightIndex;
       }
     }
 
+    // nothing to swap, so exit!
     if (swap === null) {
       break;
     }
@@ -201,40 +238,36 @@ BinaryHeap.prototype.sink = function(idx) {
 
 module.exports = BinaryHeap;
 
-///// TEST ////
+var max = 10;
+
+// var PriorityQueue = require('priorityqueuejs');
+
+// var queue = new PriorityQueue(function(a, b) {
+//   return a.cash - b.cash;
+// });
+
+// for (var i=0; i<max; i++) {
+//   queue.enq({cash: i, name: 'me'});
+// }
+
+// while(true) {
+//   console.log(queue.deq());
+//   break;
+// }
+
+
+// /// TEST ////
 var heap = new BinaryHeap(function(task) { 
   return task.priority;
 });
 
-heap.enqueue({
-  'task': 1
-  ,priority: 10
-});
-
-heap.enqueue({
-  'task': 2
-  ,priority: 6
-});
-
-heap.enqueue({
-  'task': 3
-  ,priority: 9
-});
-
-var node = {
-  'task': 4
-  ,priority: 7
-};
-
-heap.enqueue(node);
-
-heap.remove(node);
-
-heap.enqueue(node);
+for (var i=0; i<max; i++) {
+  heap.enqueue({
+    task: i
+    ,priority: i
+  });
+}
 
 while(heap.size() > 0) {
-  console.log('tasks', heap.dequeue());
+   console.log(heap.dequeue());
 };
-
-console.log('size', heap.size());
-
