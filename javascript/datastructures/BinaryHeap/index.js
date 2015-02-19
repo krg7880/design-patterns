@@ -240,22 +240,6 @@ module.exports = BinaryHeap;
 
 var max = 10;
 
-// var PriorityQueue = require('priorityqueuejs');
-
-// var queue = new PriorityQueue(function(a, b) {
-//   return a.cash - b.cash;
-// });
-
-// for (var i=0; i<max; i++) {
-//   queue.enq({cash: i, name: 'me'});
-// }
-
-// while(true) {
-//   console.log(queue.deq());
-//   break;
-// }
-
-
 // /// TEST ////
 var heap = new BinaryHeap(function(task) { 
   return task.priority;
