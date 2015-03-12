@@ -46,14 +46,20 @@ Map.prototype.putAll = function(map) {
     for (var i in map) {
         this.map[i] = map[i];
     }
+
+    // find a better solution if possible :-)
+    this.length = Object.keys(this.map).length;
 }
 
 Map.prototype.remove = function(k) {
     var previous = this.map[k];
     this.map[k] = null;
+    delete this.map[k];
+    this.length--;
     return previous;
 };
 
 Map.prototype.clear = function() {
     this.map = {};
+    this.length = 0;
 };
