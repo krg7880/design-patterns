@@ -39,7 +39,7 @@ Stack.prototype.pop = function() {
 
 /**
  * Test it!
- * 
+ *
  * @type {Stack}
  */
 var stack = new Stack();
