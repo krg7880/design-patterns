@@ -1,5 +1,5 @@
 /** 
-Implementation of a binary heap
+Implementation of a binary heap (min heap)
 -- Binary Tree (Structure)
 -- Heap property (Parent priority <= to child nodes)
 */
@@ -29,11 +29,21 @@ BinaryHeap.prototype.size = function() {
 };
 
 BinaryHeap.prototype.isEmpty = function() {
-  return this.length < 1;
+  return (this.length < 1);
 };
 
 BinaryHeap.prototype.peek = function() {
-  return (this.length > 0) ? this.heap[0] : null;
+  return (this.size() > 0) ? this.heap[0] : null;
+};
+
+/**
+Returns the parent index for element at position n
+
+@param {Number} idx Index of child element
+@return {Number} Index of parent element
+*/
+BinaryHeap.prototype.getParentIndex = function(idx) {
+  return ((idx >> 1) | 0); // floor the value
 };
 
 /**
@@ -43,8 +53,18 @@ Returns the left child index of parent n
 @return {Number} index of the child
 */
 BinaryHeap.prototype.getLeftChildIndex = function(idx) {
-  return (((idx << 1)) | 0);
+  return (((idx << 1)) | 0); // floor the value
 };
+
+/**
+Returns the right child index of parent n
+
+@param {Number} idx Index of parent element
+@return {Number} The index of the child element
+*/
+BinaryHeap.prototype.getRightChildIndex = function(idx) {
+  return (((idx << 1) + 1) | 0); // floor the value
+}
 
 /**
 Returns the left child element at position n
@@ -57,16 +77,6 @@ BinaryHeap.prototype.getLeftChild = function(idx) {
 };
 
 /**
-Returns the right child index of parent n
-
-@param {Number} idx Index of parent element
-@return {Number} The index of the child element
-*/
-BinaryHeap.prototype.getRightChildIndex = function(idx) {
-  return (((idx << 1) + 1) | 0);
-}
-
-/**
 Returns the right child element at position n
 
 @param {Number} idx The index of the child element
@@ -74,16 +84,6 @@ Returns the right child element at position n
 */
 BinaryHeap.prototype.getRightChild = function(idx) {
   return this.heap[this.getRightChildIndex(idx)];
-};
-
-/**
-Returns the parent index for element at position n
-
-@param {Number} idx Index of child element
-@return {Number} Index of parent element
-*/
-BinaryHeap.prototype.getParentIndex = function(idx) {
-  return ((idx >> 1) | 0);
 };
 
 BinaryHeap.prototype.getParent = function(idx) {
@@ -116,7 +116,7 @@ BinaryHeap.prototype.remove = function(item) {
     return null;
   }
 
-  for (var i=0; i<this.length; i++) {
+  for (var i=0; i<this.size(); i++) {
     if (this.heap[i] === item) {
       var end = this.heap.pop();
       this.heap.slice(i, 1);
@@ -172,8 +172,6 @@ BinaryHeap.prototype.swap = function(a, b) {
   var tmp = this.heap[b];
   this.heap[b] = this.heap[a];
   this.heap[a] = tmp;
-
-  //.log('swapping...')
   return this;
 };
 
