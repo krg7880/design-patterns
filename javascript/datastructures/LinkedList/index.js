@@ -1,11 +1,9 @@
 'use strict';
 
 var Node = function() {
-    return {
-        previous: null
-        ,data: null
-        ,next: null
-    };
+    this.previous = null;
+    this.data = null;
+    this.next = null;
 };
 
 var LinkedList = function() {
@@ -19,7 +17,7 @@ var LinkedList = function() {
  @param {Mixed} data Data to add
  */
 LinkedList.prototype.add = function(data) {
-    var n = Node();
+    var n = new Node();
     if (this.start === null) {
         this.end = this.start = n;
     } else {
@@ -41,7 +39,7 @@ LinkedList.prototype.add = function(data) {
  */
 LinkedList.prototype.addFirst = function(data) {
     if (null !== this.start && this.size() > 0) {
-        var n = Node();
+        var n = new Node();
         n.data = data;
         n.next = this.start;
         this.start = n;
@@ -56,7 +54,7 @@ LinkedList.prototype.addFirst = function(data) {
  Add the element to the end of the list
  */
 LinkedList.prototype.addLast = function(data) {
-    var n = Node();
+    var n = new Node();
     n.data = data;
 
     if (null === this.start && null === this.last) {
@@ -83,7 +81,7 @@ LinkedList.prototype.insertAfter = function(n, data) {
     var current = this.start;
     while (current !== null) {
         if (current.data === n.data) {
-            var _node = Node();
+            var _node = new Node();
             _node.data = data;
             _node.next = current.next;
 
@@ -125,7 +123,7 @@ LinkedList.prototype.insertAt = function(idx, data) {
     var i = 0;
     var current = this.start;
     var previous = current;
-    var n = Node();
+    var n = new Node();
     n.data = data;
 
     while(i++ < idx) {
@@ -148,7 +146,7 @@ LinkedList.prototype.contains = function(data) {
     var current = this.start;
     var isEqual = false;
     while (current !== null) {
-        if (compare.isEqual(current.data, data)) {
+        if (current.data === data) {
             isEqual = true;
             break;
         }
@@ -176,14 +174,14 @@ LinkedList.prototype.clear = function() {
  data provided.
  */
 LinkedList.prototype.remove = function(data) {
-    if (this.start && this.start.data && compare.isEqual(this.start.data, data)) {
+    if (this.start && this.start.data && this.start.data === data) {
         this.length--;
 
         if (null !== this.start.next) {
             return this.start = this.start.next;
         }
 
-        if (compare.isEqual(this.start, this.end)) {
+        if (this.start === this.end) {
             return this.start = this.end = null;
         }
     }
@@ -193,12 +191,12 @@ LinkedList.prototype.remove = function(data) {
         previous = current;
         current = current.next;
 
-        if (compare.isEqual(current.data, data)) {
+        if (current.data === data) {
             previous.next = (current.next) ? current.next : null;
 
             // check if we're removing the "last" item
             // and reset it accordingly...
-            if (compare.isEqual(data, this.end.data)) {
+            if (data === this.end.data) {
                 this.end = previous;
             }
 
@@ -229,7 +227,6 @@ LinkedList.prototype.findByIndex = function(idx) {
 
         if (i++ === idx) {
             previous.next = (current && current.next) ? current.next : null;
-            //if (compare.isEqual(previous.next, this.end.data)) {
             if (previous.next === this.end.data) {
                 this.end = previous;
             }
@@ -243,33 +240,63 @@ LinkedList.prototype.findByIndex = function(idx) {
 };
 
 /**
+ * Removes the first element from
+ * the list
+ * @returns {*}
+ */
+LinkedList.prototype.shift = function() {
+    if (this.isEmpty()) {
+        return null;
+    }
+
+    if (this.start.next) {
+        this.length--;
+        var tmp = this.start.data;
+        this.start = this.start.next;
+        return tmp;
+    }
+
+    if (this.start === this.end) {
+        this.length--;
+        var tmp = this.start.data;
+        this.start = this.end = null;
+        return tmp;
+    }
+};
+
+/**
  Removes the n(th) element
  @param {Number} idx The index position of the element
  */
 LinkedList.prototype.removeAt = function(idx) {
-    if (!this.isIndexInBounds(idx)) {
-        throw new Error('IndexOutOfBoundsException')
+    if (this.isEmpty()) {
+        return null;
     }
 
-    if (this.start && (typeof (this.start.data) !== 'undefined') && idx === 0) {
-        if (typeof (this.start.next) !== 'undefined') {
-            this.length--;
-            var tmp = this.start.data;
-            this.start = this.start.next;
-            return tmp;
-        }
+    if (!this.isIndexInBounds(idx)) {
+        throw new Error('IndexOutOfBoundsException: ' + idx);
+    }
 
-        if (this.start === this.end) {
-            this.length--;
-            var tmp = this.start.data;
-            this.start = this.end = null;
-            return tmp;
-        }
+    if (idx === 0) {
+        return this.shift();
     }
 
     return this.findByIndex(idx);
 };
 
+/**
+ * Removes the last element from the list
+ *
+ * @returns {*}
+ */
+LinkedList.prototype.pop = function() {
+    // @TODO Implement me!
+};
+
+/**
+ * Returns the size of the list
+ * @returns {number}
+ */
 LinkedList.prototype.size = function() {
     return this.length;
 };
