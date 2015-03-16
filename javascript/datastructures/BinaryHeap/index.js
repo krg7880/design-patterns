@@ -236,20 +236,20 @@ BinaryHeap.prototype.sink = function(idx) {
 
 module.exports = BinaryHeap;
 
-var max = 10;
-
-// /// TEST ////
-var heap = new BinaryHeap(function(task) { 
-  return task.priority;
-});
-
-for (var i=0; i<max; i++) {
-  heap.enqueue({
-    task: i
-    ,priority: i
-  });
-}
-
-while(heap.size() > 0) {
-   console.log(heap.dequeue());
-};
+//var max = 10;
+//
+//// /// TEST ////
+//var heap = new BinaryHeap(function(task) {
+//  return task.priority;
+//});
+//
+//for (var i=0; i<max; i++) {
+//  heap.enqueue({
+//    task: i
+//    ,priority: i
+//  });
+//}
+//
+//while(heap.size() > 0) {
+//   console.log(heap.dequeue());
+//};

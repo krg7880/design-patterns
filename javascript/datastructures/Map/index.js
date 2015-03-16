@@ -1,3 +1,7 @@
+/**
+ * Map Implementation
+ * @constructor
+ */
 function Map() {
     this.map = {};
     this.length = 0;
