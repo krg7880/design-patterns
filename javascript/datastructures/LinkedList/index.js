@@ -16,7 +16,7 @@ var LinkedList = function() {
  Add a new node to the end of the list
  @param {Mixed} data Data to add
  */
-LinkedList.prototype.add = function(data) {
+LinkedList.prototype.add = LinkedList.prototype.push = function(data) {
     var n = new Node();
     if (this.start === null) {
         this.end = this.start = n;
@@ -103,7 +103,7 @@ LinkedList.prototype.insertAfter = function(n, data) {
  @return {Object} The head (first) element
  */
 LinkedList.prototype.getFirst = LinkedList.prototype.peek =  LinkedList.prototype.element = function() {
-    return this.start;
+    return this.start.data;
 };
 
 /**
@@ -236,7 +236,28 @@ LinkedList.prototype.findByIndex = function(idx) {
         }
     };
 
-    return this.current.data;
+    return current.data;
+};
+
+/**
+ * Peek at the element at the nth position
+ * @param idx
+ * @returns {*}
+ */
+LinkedList.prototype.peekAt = function(idx) {
+    var current = this.start;
+    var i = 0;
+    while(i < this.size()) {
+        if (i === idx) {
+            break;
+        }
+
+        current = current.next;
+
+        i++;
+    };
+
+    return current.data;
 };
 
 /**
