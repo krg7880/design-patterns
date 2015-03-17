@@ -37,6 +37,7 @@
  * -- Each site is open with probability p (or blocked with probability 1-p)
  * -- Systems percolates IFF top and bottom are connected by open sites
  *
+ * @NOTE THIS IS NOT USABLE YET
  * @param int
  * @constructor
  */
