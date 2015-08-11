@@ -23,10 +23,7 @@ Fibonacci.prototype.reset = function reset() {
  */
 Fibonacci.prototype.generate = function generate(n) {
     this.reset();
-
-    var self = this;
-    var idx = 0;
-
+    
     return run.call(this, n);
 };
 
