@@ -5,7 +5,8 @@ var memoize = function (fn, results) {
     return function compute(n) {
         var current = memo[n];
 
-        // avoid truthy test by ensuring type if a number
+        // avoid false truthy test by ensuring type if a number
+        // instead of !current as it could be 0|1
         if (typeof current !== 'number') {
             current = fn(compute, n);
             memo[n] = results[results.length] = current;
